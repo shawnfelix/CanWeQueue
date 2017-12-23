@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Overwatch Smurf</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+
+    <!-- page content css -->
+    <link rel="stylesheet" type="text/css" href="css/ow.css">
+</head>
+
+<body>
+
+    <div id="wrapper" class="toggled">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Overwatch Accounts
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Account-History</a>
+                </li>
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+<!-- Page Content -->
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <a class="btn btn-secondary" id="refresh-btn">Refresh All &#8635;</a>
+        <h2>Accounts</h2>
+        <div id="Phelix">
+            <div class="name-wrapper">
+                <span class="name-field">Phelix</span>
+                <span class="hashtag-field">#11938</span>
+            </div>
+            <div class="rank-wrapper">
+                Current Competitive Rank:
+                <span class="rank-field">-</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/ow.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    $("#refresh-btn").click(function(e) {
+        e.preventDefault();
+        setAccountDetails("Phelix-11938");
+    });
+    </script>
+
+</body>
+
+</html>
