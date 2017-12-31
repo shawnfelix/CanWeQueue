@@ -10,3 +10,16 @@
 .rank-field {
 	font-weight:bold;
 }
+.stats-wrapper{display:inline-block; height:100px; vertical-align:top; padding-top:27px;}
+
+/* Rank Icons */
+.rank-icon-wrapper {width:100px; height:100px; display:inline-block;}
+.rank-icon-wrapper > * {width:100%; height:100%;}
+.bronze {background-image: url('../img/bronze.png');background-size:contain;}
+.silver {background-image: url('../img/silver.png');background-size:contain;}
+.gold {background-image: url('../img/gold.png');background-size:contain;}
+.platinum {background-image: url('../img/platinum.png');background-size:contain;}
+.diamond {background-image: url('../img/diamond.png');background-size:contain;}
+.master {background-image: url('../img/master.png');background-size:contain;}
+.grandmaster {background-image: url('../img/grandmaster.png');background-size:contain;}
+.t500 {background-image: url('../img/t500.png');background-size:contain;}
