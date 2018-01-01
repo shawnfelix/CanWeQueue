@@ -16,3 +16,39 @@ function loadData(data){
 	var rank = data['us']['stats']['competitive']['overall_stats']['comprank'];
 	$(" .rank-field").html(rank);
 }
+
+function addNewAccount(accountName, accountNumber){
+	//var account.accountName = accountName;
+	//var account.accountNumber = accountNumber;
+
+	$.ajax({
+		type: 'POST',
+		url: '/api.php',
+		data: {service: JSON.stringify(accountName)},
+		dataType: "json",
+		success: function(){
+			//update();
+		}
+	});
+}
+
+function apiRefresh(){
+	$.ajax({
+		type: 'POST',
+		url: '/api.php',
+		data: {"apiRefresh": "1"},
+		success: function(jsonPayload){
+			alert("Success!");
+			updateView(jsonPayload);
+		},
+		error: function(xhr, textStatus, error){
+			var data = xhr.responseText;
+
+    		$('body').replaceWith(data);
+		}
+	});
+}
+
+function updateView(payload){
+	test = payload;
+}

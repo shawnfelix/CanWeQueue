@@ -1,40 +1,13 @@
 <?php
 
-    function loadFromCache($connection){
-        $query = "SELECT * FROM account WHERE active = '1' ORDER BY name DESC ";
-        $result = mysqli_query($connection, $query);
+    function getDatabaseConnection(){
+        $servername = "107.180.43.16";
+        $username = "owuser";
+        $password = "Hanjoswap1!";
+        $dbname = "OWSmurf";
 
-        if (!$result) {
-            printf("Error: %s\n", mysqli_error($con));
-            exit();
-        }
-        $rawhtml = "";
-        while($row = mysqli_fetch_array($result)){
-            $name = $row['name'];
-            $nameId = $row['name_id'];
-            $sr = $row['sr']; //SR
-            $rank = generateRankBracket($sr);
-
-            $rawhtml .= '<div id="' . $name . '">
-                    <div class="rank-icon-wrapper">
-                        <div class="rank-icon '. $rank .'"></div>
-                    </div>
-                    <div class="stats-wrapper">
-                        <div class="name-wrapper">
-                            <span class="name-field">' . $name . '</span>
-                            <span class="hashtag-field">#' . $nameId . '</span>
-                        </div>
-                        <div class="rank-wrapper">
-                            Current Competitive Rank:
-                            <span class="rank-field">' . $sr . '</span>
-                        </div>
-                    </div>
-                </div>';
-        }
-
-        return $rawhtml;
+        return new mysqli($servername, $username, $password, $dbname);
     }
-
     function generateRankBracket($rank){
         switch($rank){
             case $rank > 0 && $rank < 1000 :
@@ -59,19 +32,8 @@
                 return 'grandmaster';
             break;
             default:
-                return 'bronze';
+                return 'unranked';
         }
     }
-    function updateCache($connection) {
-        $query 
 
-        $result = mysqli_query($connection, $query);
-        
-
-        // Check connection
-        if ($connection->connect_error) {
-            die("Connection failed: " . $connection->connect_error);
-        } 
-        echo "Connected successfully";
-    }
 ?>
