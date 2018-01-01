@@ -10,7 +10,7 @@
     }
     function generateRankBracket($rank){
         switch($rank){
-            case $rank > 0 && $rank < 1000 :
+            case $rank > 0 && $rank < 1500 :
                 return 'bronze';
             break;
             case $rank >= 1500 && $rank < 2000 :

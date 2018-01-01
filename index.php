@@ -8,7 +8,8 @@
     $connection = getDatabaseConnection();
 
     $accounts = loadFromCache($connection);
-
+    
+    
     $html = str_replace("{{accounts}}", $accounts, $html); 
     $html = str_replace("{{rank}}", $rank, $html); 
     echo $html;

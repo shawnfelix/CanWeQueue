@@ -4,6 +4,11 @@
 	font-weight:bold;
 }
 
+#refresh-btn {border:0; margin:0 20px 10px; background:#ad3535; font-weight:bold; color:#999999;padding-left:0;cursor:pointer}
+#refresh-btn:hover {
+	background:#b76060;
+	color:#313131;
+}
 
 .rank-wrapper {
 }

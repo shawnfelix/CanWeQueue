@@ -37,8 +37,8 @@ function apiRefresh(){
 		type: 'POST',
 		url: '/api.php',
 		data: {"apiRefresh": "1"},
+		dataType: "json",
 		success: function(jsonPayload){
-			alert("Success!");
 			updateView(jsonPayload);
 		},
 		error: function(xhr, textStatus, error){
@@ -50,5 +50,8 @@ function apiRefresh(){
 }
 
 function updateView(payload){
-	test = payload;
+	for(i = 0; i < payload.length; i++){
+		$("#" + payload[i].name + " .rank-field").html(payload[i].sr);
+		$("#" + payload[i].name + " .rank-icon").removeClass().addClass("rank-icon " + payload[i].rank);
+	}
 }

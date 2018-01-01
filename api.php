@@ -1,7 +1,11 @@
 <?php
 	include 'functions.php';
 
-	 function loadFromCache($connection){
+	function getCacheInformation(){
+
+	}
+
+	function loadFromCache($connection){
         $query = "SELECT * FROM account WHERE active = '1' ORDER BY name DESC ";
         $result = mysqli_query($connection, $query);
 
@@ -42,7 +46,7 @@
         $query ="SELECT name, name_id FROM account WHERE active = 1";
         $result = mysqli_query($connection, $query);
         
-        $accountDataArray = array();
+        $accountDataArray = [];
 
         
         //for each account in the db
@@ -67,15 +71,17 @@
 
             $jsonData = json_decode($apiResult, true);
 
-            $rank = $jsonData['us']['stats']['competitive']['overall_stats']['comprank'];
+            $sr = $jsonData['us']['stats']['competitive']['overall_stats']['comprank'];
 
-            if($rank > 0 && $rank < 5000){
+            if($sr > 0 && $sr < 5000){
+            	$rank = generateRankBracket($sr);
+            	
+            	//TODO this is pretty inefficient, requires (n) queries to database
                 //generate update query
-                $query = "UPDATE account SET sr='" . $rank . "' WHERE name='" . $name . "';";
-                echo $query;
+                $query = "UPDATE account SET sr='" . $sr . "' WHERE name='" . $name . "';";
                 mysqli_query($connection, $query);
 
-                $accountDetail = array("name" => $name, "rank" => $rank);
+                $accountDetail = array("name" => $name, "rank" => $rank, "sr" => $sr);
 
                 //add to payload to send to client
                 array_push($accountDataArray, $accountDetail);
@@ -84,15 +90,41 @@
             }
         }
         //encode array and return to client as json
-        echo json_encode($accountDataArray);
+        $jsonresponse = json_encode($accountDataArray);
+        echo $jsonresponse;
+    }
+
+    /**
+    * Adds a given account to the database
+    *
+    *
+    */
+    function addAccount($payload){
+
+    }
+
+    /**
+    * Removes a given account from the database
+    *
+    *
+    */
+    function removeAccount($payload){
+    	
     }
 
 
 
+
+
+
+//api router
 	if (isset($_POST['apiRefresh'])) {
         return updateCache();
     } 
-    else if(isset($_POST['test'])){
-    	echo "works!";
+    else if(isset($_POST['addAccount'])){
+    	return addAccount();
+    }
+    else if(isset($_POST['removeAccount'])){
+    	return removeAccount();
     }
 ?>
