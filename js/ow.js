@@ -33,6 +33,20 @@ function apiAddNewAccount(accountName, accountNumber){
 	});
 }
 
+function apiRemoveAccount(accountName, accountNumber){
+	$.ajax({
+		type: 'POST',
+		url: '/api.php',
+		data: {"removeAccount": "1", "name": accountName, "number": accountNumber},
+		success: function(jsonPayload){
+			removeAccountFromView(accountName);
+		},
+		error: function(xhr, textStatus, error){
+			alert('fail');
+		}
+	});
+}
+
 function apiRefresh(){
 	$.ajax({
 		type: 'POST',
@@ -51,6 +65,9 @@ function apiRefresh(){
 }
 
 
+
+
+
 function addAccountToView(jsonPayload){
     var template ='<div id="' 
     	+ jsonPayload.name + '" style="display:none;"><div class="rank-icon-wrapper"><div class="rank-icon '
@@ -61,6 +78,10 @@ function addAccountToView(jsonPayload){
     //append new account object
     $("#accounts-pane").append(template);
     $('#' + jsonPayload.name).slideToggle("slow");
+}
+
+function removeAccountFromView(accountName){
+	$('#' + accountName).parent().slideToggle("slow");
 }
 function updateView(payload){
 	for(i = 0; i < payload.length; i++){

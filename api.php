@@ -38,6 +38,7 @@
                             <span class="hashtag-field">#' . $nameId . '</span>
                         </div>
                     </div>
+                    <div class="delete-account-btn"></div>
                 </div>
                 </div>';
 
@@ -110,8 +111,12 @@
     *
     *
     */
-    function removeAccount($payload){
-    	
+    function removeAccount($name){
+        $connection = getDatabaseConnection();
+
+        $query = "DELETE FROM account WHERE name = '" . $name . "';";
+
+        mysqli_query($connection, $query);
     }
 
 
@@ -127,6 +132,6 @@
     	return addAccount($_POST['name'], $_POST['number']);
     }
     else if(isset($_POST['removeAccount'])){
-    	return removeAccount();
+    	return removeAccount($_POST['name']);
     }
 ?>

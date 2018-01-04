@@ -4,6 +4,7 @@
 }
 
 body{
+	background:#2a3a3c;
 	background-image: url('../img/kings-row-background-blur.png');
 	background-repeat: no-repeat;
     background-attachment: fixed;
@@ -11,15 +12,21 @@ body{
 }
 
 /* Colors */
-.light-red{background:#a77272df;}
-.light-grey{background:#90959adf;}
+.light-red{background:#a77272df; }
+.light-red:hover {background:#a77272df;}
+.light-grey{background:#90959adf;transition:background .1s ease;}
+.light-grey:hover{background:#737980df;}
 
-.name-wrapper{
-	font-family:blacklisted;
-}
-.name-field {
-	font-size:37px;
-}
+/* Account Boxes */
+.name-wrapper{font-family:blacklisted;}
+.name-field {font-size:37px;}
+.rank-field {font-size: 25px;}
+.stats-wrapper{font-size:25px;display:inline-block; height:100px; vertical-align:top; padding-top:40px;padding-left:10px;}
+.hashtag-field{font-size:15px;}
+.account-wrapper{position:relative;margin-bottom:10px; padding:10px; padding-top:0; border-radius:8px;color:#142a2d;}
+.delete-account-btn{display:none;cursor:pointer;position:absolute; right:30px; top:47px; width:30px; height:30px; background-image: url('../img/delete.png'); background-size:contain;}
+.delete-account-btn:hover{filter: brightness(80%);}
+.account-wrapper:hover .delete-account-btn {display:block;}
 
 #refresh-btn {border:0; margin:0 20px 10px; background:#ad3535; font-weight:bold; color:#1f1f1f;padding-left:0;cursor:pointer}
 #refresh-btn:hover {
@@ -32,13 +39,6 @@ body{
 .side-btn {border:0; margin:0 20px 10px; font-weight:bold; padding-left:0;cursor:pointer}
 
 
-.rank-field {
-	font-size: 25px;
-}
-.stats-wrapper{font-size:25px;display:inline-block; height:100px; vertical-align:top; padding-top:40px;padding-left:10px;}
-.hashtag-field{font-size:15px;}
-
-.account-wrapper{margin-bottom:10px; padding:10px; padding-top:0; border-radius:8px;}
 
 
 /* Rank Icons */
