@@ -17,17 +17,18 @@ function loadData(data){
 	$(" .rank-field").html(rank);
 }
 
-function addNewAccount(accountName, accountNumber){
-	//var account.accountName = accountName;
-	//var account.accountNumber = accountNumber;
+function apiAddNewAccount(accountName, accountNumber){
 
 	$.ajax({
 		type: 'POST',
 		url: '/api.php',
-		data: {service: JSON.stringify(accountName)},
+		data: {"addAccount": "1", "name": accountName, "number": accountNumber},
 		dataType: "json",
-		success: function(){
-			//update();
+		success: function(jsonPayload){
+			addAccountToView(jsonPayload);
+		},
+		error: function(xhr, textStatus, error){
+			alert('fail');
 		}
 	});
 }
@@ -49,6 +50,18 @@ function apiRefresh(){
 	});
 }
 
+
+function addAccountToView(jsonPayload){
+    var template ='<div id="' 
+    	+ jsonPayload.name + '" style="display:none;"><div class="rank-icon-wrapper"><div class="rank-icon '
+    	+ jsonPayload.rank + '"></div></div><div class="stats-wrapper"><div class="name-wrapper"><span class="name-field">' 
+    	+ jsonPayload.name + '</span><span class="hashtag-field">&nbsp;#' 
+    	+ jsonPayload.number + '</span></div><div class="rank-wrapper">Current Competitive Rank:&nbsp;<span class="rank-field">'
+    	+ jsonPayload.sr + '</span></div></div></div>';
+    //append new account object
+    $("#accounts-pane").append(template);
+    $('#' + jsonPayload.name).slideToggle("slow");
+}
 function updateView(payload){
 	for(i = 0; i < payload.length; i++){
 		$("#" + payload[i].name + " .rank-field").html(payload[i].sr);

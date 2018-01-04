@@ -6,7 +6,7 @@
 	}
 
 	function loadFromCache($connection){
-        $query = "SELECT * FROM account WHERE active = '1' ORDER BY name DESC ";
+        $query = "SELECT * FROM account WHERE active = '1' ORDER BY name ASC ";
         $result = mysqli_query($connection, $query);
 
         if (!$result) {
@@ -14,27 +14,34 @@
             exit();
         }
         $rawhtml = "";
+        $index = 0;
         while($row = mysqli_fetch_array($result)){
             $name = $row['name'];
             $nameId = $row['name_id'];
             $sr = $row['sr']; //SR
             $rank = generateRankBracket($sr);
 
-            $rawhtml .= '<div id="' . $name . '">
+            $backgroundColorClass = "light-red";
+
+            if($index%2 == 0){
+                $backgroundColorClass = "light-grey";
+            }
+
+            $rawhtml .= '<div class="account-wrapper '. $backgroundColorClass .'"><div id="' . $name . '">
                     <div class="rank-icon-wrapper">
                         <div class="rank-icon '. $rank .'"></div>
+                        <div class="rank-field">' . $sr . '</div>
                     </div>
                     <div class="stats-wrapper">
                         <div class="name-wrapper">
                             <span class="name-field">' . $name . '</span>
                             <span class="hashtag-field">#' . $nameId . '</span>
                         </div>
-                        <div class="rank-wrapper">
-                            Current Competitive Rank:
-                            <span class="rank-field">' . $sr . '</span>
-                        </div>
                     </div>
+                </div>
                 </div>';
+
+            $index++;
         }
 
         return $rawhtml;
@@ -47,35 +54,18 @@
         $result = mysqli_query($connection, $query);
         
         $accountDataArray = [];
-
         
         //for each account in the db
         while($row = mysqli_fetch_array($result)){
             $name = $row['name'];
             $nameId = $row['name_id'];
 
-            //query the overwatch api
-            $url = "http://owapi.net/api/v3/u/" . $name . "-" . $nameId . "/stats";
-
-            $ch = curl_init();
-            // Will return the response, if false it print the response
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-			// Disable SSL verification
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_VERBOSE, true);
-			curl_setopt($ch,CURLOPT_FOLLOWLOCATION, true);
-			curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
-            $apiResult = curl_exec($ch);
-
-
-            $jsonData = json_decode($apiResult, true);
-
-            $sr = $jsonData['us']['stats']['competitive']['overall_stats']['comprank'];
+            //OW api call
+            $sr = getAccountSr($name, $nameId);
 
             if($sr > 0 && $sr < 5000){
             	$rank = generateRankBracket($sr);
-            	
+
             	//TODO this is pretty inefficient, requires (n) queries to database
                 //generate update query
                 $query = "UPDATE account SET sr='" . $sr . "' WHERE name='" . $name . "';";
@@ -90,8 +80,8 @@
             }
         }
         //encode array and return to client as json
-        $jsonresponse = json_encode($accountDataArray);
-        echo $jsonresponse;
+        $jsonResponse = json_encode($accountDataArray);
+        echo $jsonResponse;
     }
 
     /**
@@ -99,8 +89,20 @@
     *
     *
     */
-    function addAccount($payload){
+    function addAccount($name, $number){
+    	$connection = getDatabaseConnection();
 
+    	$sr = getAccountSr($name, $number);
+    	$rank = generateRankBracket($sr);
+
+    	$query = "INSERT INTO account (account_id, name, name_id, sr, active) VALUES(0, '" . $name . "', " . $number . ", " . $sr . ", 1)";
+    	
+    	mysqli_query($connection, $query);
+
+    	$accountData = array ("name" => $name, "number" => $number, "sr" => $sr, "rank" => $rank);
+
+    	$jsonResponse = json_encode($accountData);
+    	echo $jsonResponse;
     }
 
     /**
@@ -122,7 +124,7 @@
         return updateCache();
     } 
     else if(isset($_POST['addAccount'])){
-    	return addAccount();
+    	return addAccount($_POST['name'], $_POST['number']);
     }
     else if(isset($_POST['removeAccount'])){
     	return removeAccount();

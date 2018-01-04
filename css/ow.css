@@ -1,25 +1,50 @@
-.name-wrapper{
-}
-.name-field {
-	font-weight:bold;
+@font-face {
+	font-family:"blacklisted";
+	src: url("../fonts/Freshman.ttf");
 }
 
-#refresh-btn {border:0; margin:0 20px 10px; background:#ad3535; font-weight:bold; color:#999999;padding-left:0;cursor:pointer}
+body{
+	background-image: url('../img/kings-row-background-blur.png');
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+}
+
+/* Colors */
+.light-red{background:#a77272df;}
+.light-grey{background:#90959adf;}
+
+.name-wrapper{
+	font-family:blacklisted;
+}
+.name-field {
+	font-size:37px;
+}
+
+#refresh-btn {border:0; margin:0 20px 10px; background:#ad3535; font-weight:bold; color:#1f1f1f;padding-left:0;cursor:pointer}
 #refresh-btn:hover {
 	background:#b76060;
 	color:#313131;
 }
 
-.rank-wrapper {
-}
+#ow-logo-sidebar {opacity:.05; background-size: contain; background-position:center; background-repeat: no-repeat;width:100%; height:200px; position:absolute; bottom:0; background-image: url('../img/ow-logo-white.png');}
+#add-account-btn > img {height:20px;width:20px;margin-right:5px;margin-top:2px; vertical-align:top;}
+.side-btn {border:0; margin:0 20px 10px; font-weight:bold; padding-left:0;cursor:pointer}
+
+
 .rank-field {
-	font-weight:bold;
+	font-size: 25px;
 }
-.stats-wrapper{display:inline-block; height:100px; vertical-align:top; padding-top:27px;}
+.stats-wrapper{font-size:25px;display:inline-block; height:100px; vertical-align:top; padding-top:40px;padding-left:10px;}
+.hashtag-field{font-size:15px;}
+
+.account-wrapper{margin-bottom:10px; padding:10px; padding-top:0; border-radius:8px;}
+
 
 /* Rank Icons */
-.rank-icon-wrapper {width:100px; height:100px; display:inline-block;}
+.rank-icon-wrapper {width:100px; height:100px; display:inline-block; font-family:blacklisted; letter-spacing:1.5px;text-align:center;}
 .rank-icon-wrapper > * {width:100%; height:100%;}
+.rank-field { margin-top:-15px;}
 .bronze {background-image: url('../img/bronze.png');background-size:contain;}
 .silver {background-image: url('../img/silver.png');background-size:contain;}
 .gold {background-image: url('../img/gold.png');background-size:contain;}
@@ -28,3 +53,5 @@
 .master {background-image: url('../img/master.png');background-size:contain;}
 .grandmaster {background-image: url('../img/grandmaster.png');background-size:contain;}
 .t500 {background-image: url('../img/t500.png');background-size:contain;}
+
+/* Hero Icons */

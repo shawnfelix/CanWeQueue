@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Overwatch Smurf</title>
+    <title>Overwatch: Can I Queue?</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,8 +20,10 @@
     <!-- Custom styles for this template -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
 
+    <!-- favicon -->
+    <link rel="shortcut icon" href="img/favicon.ico"/>
 </head>
-
+<div class="background"></div>
 <body>
 
     <div id="wrapper" class="toggled">
@@ -35,7 +37,25 @@
                     </div>
                 </li>
                 <li>
-                    <a class="btn btn-secondary" id="refresh-btn">Refresh All &#8635;</a>
+                    <a class="btn btn-secondary side-btn" id="refresh-btn">Update Acct. Ratings &#8635;</a>
+                </li>
+                <li>
+                    <a class="btn btn-secondary side-btn" id="add-account-btn">
+                        Add Account
+                    </a>
+                </li>
+                <li id="add-account-wrapper" style="display:none; margin-bottom:10px;">
+                    <div class="input-group" style="margin:0 20px 10px; width:auto;">
+                        <span class="input-group-addon"><img src="img/user.png" style="width:15px"></span>
+                        <input id="name-input-field" type="text" class="form-control" placeholder="Account Name">
+                    </div>
+                    <div class="input-group" style="margin:0 20px; width:auto;">
+                        <span class="input-group-addon">
+                            <div style="font-weight:900; padding: 0 3px; text-indent:0;">#</div>
+                        </span>
+                        <input id="number-input-field" type="text" class="form-control" placeholder="Number">
+                    </div>
+                    <div id="add-account-submit-btn" class="btn btn-primary" style="cursor:pointer; margin-left: 145px;padding-left:0;margin-top: 10px;">Add<img src="img/plus.png" style="width:20px;padding-left:5px;"></div>
                 </li>
                 <li>
                     <a href="#">Account-History</a>
@@ -45,12 +65,13 @@
                 </li>
                 
             </ul>
+            <div id="ow-logo-sidebar"></div>
         </div>
         <!-- /#sidebar-wrapper -->
 
 <!-- Page Content -->
 <div id="page-content-wrapper">
-    <div class="container-fluid">
+    <div class="container-fluid" id="accounts-pane">
         <h2>Accounts</h2>
         {{accounts}}
     </div>
@@ -72,10 +93,31 @@
         $("#wrapper").toggleClass("toggled");
     });
 
+    //refresh cache button event
     $("#refresh-btn").click(function(e) {
         e.preventDefault();
         apiRefresh();
     });
+
+    //toggle add account button event
+    $("#add-account-btn").click(function(e){
+        e.preventDefault();
+        $("#add-account-wrapper").slideToggle();
+    });
+
+    $("#add-account-submit-btn").click(function(e){
+        e.preventDefault();
+        
+        //slide up box
+        $("#add-account-wrapper").slideToggle();
+        var name = $("#name-input-field");
+        var number = $("#number-input-field");
+
+        apiAddNewAccount(name.val(), number.val());
+        
+        $("#name-input-field").val('');
+        $("#number-input-field").val('');
+    })
     </script>
 
 </body>

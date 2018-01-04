@@ -36,4 +36,34 @@
         }
     }
 
+    function getAccountInfoJson($name, $nameId){
+        //query the overwatch api
+        $url = "http://owapi.net/api/v3/u/" . $name . "-" . $nameId . "/stats";
+
+        $ch = curl_init();
+        
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+        // Disable SSL verification
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_VERBOSE, true);
+        curl_setopt($ch,CURLOPT_FOLLOWLOCATION, true);
+        // owapi server rejects requests without a useragent
+        curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+        $apiResult = curl_exec($ch);
+
+
+        $jsonData = json_decode($apiResult, true);
+
+        return $jsonData;
+    }
+
+    function getAccountSr($name, $nameId){
+        $jsonData = getAccountInfoJson($name, $nameId);
+
+        $sr = $jsonData['us']['stats']['competitive']['overall_stats']['comprank'];
+
+        return $sr;
+    }
+
 ?>
